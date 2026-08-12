@@ -1,9 +1,54 @@
-<!-- BEGIN:nextjs-agent-rules -->
+# AGENTS.md
 
-# This is NOT the Next.js you know
+Instructions for AI coding agents working in this project. This is the cross-tool
+entry point: Codex, Cursor, GitHub Copilot, Gemini CLI, Aider, Zed, Windsurf, and
+others.
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+## What this is
 
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+SeoPilot - an SEO tool. Project description and purpose to be filled in after
+planning.
 
-<!-- END:nextjs-agent-rules -->
+## Context files
+
+- `blueprint/context/project-overview.md` - the project's source of truth
+- `blueprint/context/coding-standards.md` - conventions to follow
+- `blueprint/context/ai-interaction.md` - how to work with the user
+- `blueprint/context/current-feature.md` - the one feature, fix, or rollback being built right now
+
+## Conventions
+
+See `blueprint/context/coding-standards.md` for the full conventions. Key points:
+
+- **Next.js 16** with App Router, TypeScript strict mode
+- **Tailwind CSS v4** with CSS-first config
+- **npm** as package manager
+- Server components by default, Server Actions for mutations
+- Components: `src/components/[feature]/ComponentName.tsx`
+- Server Actions: `src/actions/[feature].ts`
+- Validate inputs with Zod
+- Return `{ success, data, error }` from actions
+
+## Commands
+
+- Dev server: `npm run dev` (http://localhost:3000)
+- Build: `npm run build`
+- Production server: `npm run start`
+- Lint: `npm run lint`
+
+No test command configured yet. No Verify command configured yet.
+
+## Testing
+
+Testing is opt-in. When a `test` command is added to the Commands section,
+tests become a required gate for logic-bearing steps (parsers, validators,
+server actions). UI and integration-only steps remain exempt.
+
+## Workflow
+
+Build one feature, fix, or rollback at a time. Spec before code, small reviewed
+diffs, one work item at a time. Current work lives in
+`blueprint/context/current-feature.md`. History lives in `blueprint/history/`.
+
+Branch naming: `feature/[name]` or `fix/[name]`. Conventional commit messages
+(`feat:`, `fix:`, `chore:`). Ask before committing.
