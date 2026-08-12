@@ -25,12 +25,12 @@ export async function runSync(): Promise<{ rowsUpserted: number; runId: number }
       .prepare(`SELECT id FROM search_console_properties WHERE property_url = ?`)
       .get(env.GSC_PROPERTY_URL) as { id: number };
 
-    const rows = await fetchSearchAnalytics(28);
+    const rows = await fetchSearchAnalytics(90);
 
     const upsert = db.prepare(`
       INSERT OR REPLACE INTO synced_pages
-        (property_id, page_url, query, position, impressions, clicks, ctr, synced_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))
+        (property_id, page_url, query, data_date, position, impressions, clicks, ctr, synced_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
     `);
 
     const insertMany = db.transaction(() => {
@@ -39,6 +39,7 @@ export async function runSync(): Promise<{ rowsUpserted: number; runId: number }
           property.id,
           row.page,
           row.query,
+          row.date,
           row.position,
           row.impressions,
           row.clicks,

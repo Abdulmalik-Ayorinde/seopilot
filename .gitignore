@@ -47,6 +47,12 @@ data/
 # service account keys
 newjsisite-62cae08355eb.json
 
+# local data
+data/
+
+# service account keys
+newjsisite-62cae08355eb.json
+
 # AI Blueprint local workflow files
 .agents/
 .claude/

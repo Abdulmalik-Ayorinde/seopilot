@@ -21,10 +21,6 @@ export function getDb(): Database.Database {
   return db;
 }
 
-export function getDbPath(): string {
-  return DB_PATH;
-}
-
 export function closeDb(): void {
   if (db) {
     db.close();

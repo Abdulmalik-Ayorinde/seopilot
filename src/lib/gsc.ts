@@ -5,6 +5,7 @@ import { getEnv } from "./env";
 interface SearchAnalyticsRow {
   page: string;
   query: string;
+  date: string;
   position: number;
   impressions: number;
   clicks: number;
@@ -29,6 +30,7 @@ function extractRows(response: webmasters_v3.Schema$SearchAnalyticsQueryResponse
   return response.rows.map((row) => ({
     page: row.keys?.[0] ?? "",
     query: row.keys?.[1] ?? "",
+    date: row.keys?.[2] ?? "",
     position: row.position ?? 0,
     impressions: row.impressions ?? 0,
     clicks: row.clicks ?? 0,
@@ -51,12 +53,12 @@ export async function fetchSearchAnalytics(days: number): Promise<SearchAnalytic
   const requestBody: webmasters_v3.Schema$SearchAnalyticsQueryRequest = {
     startDate: formatDate(startDate),
     endDate: formatDate(endDate),
-    dimensions: ["page", "query"],
+    dimensions: ["page", "query", "date"],
     rowLimit: 25000,
     startRow: 0,
   };
 
-  let allRows: SearchAnalyticsRow[] = [];
+  const allRows: SearchAnalyticsRow[] = [];
 
   do {
     requestBody.startRow = allRows.length;
