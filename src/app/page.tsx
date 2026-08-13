@@ -6,7 +6,7 @@ export default function Home() {
 
   return (
     <main className="flex-1 p-6 font-sans">
-      <div className="max-w-7xl mx-auto">
+      <div className="">
         <h1 className="text-2xl font-semibold text-zinc-900 dark:text-zinc-100 mb-6">
           SeoPilot
         </h1>

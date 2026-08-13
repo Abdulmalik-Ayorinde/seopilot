@@ -55,6 +55,19 @@ export function runMigrations(): void {
       completed_at TEXT
     )
   `);
+
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS seo_opportunities (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      synced_page_id INTEGER NOT NULL UNIQUE REFERENCES synced_pages(id),
+      traffic_upside REAL NOT NULL,
+      ranking_probability REAL NOT NULL,
+      data_confidence REAL NOT NULL,
+      score REAL NOT NULL,
+      status TEXT NOT NULL DEFAULT 'identified',
+      created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    )
+  `);
 }
 
 if (require.main === module) {

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { SyncedPageRow } from "@/lib/db-read";
 
-type SortField = "page_url" | "query" | "position" | "impressions" | "clicks" | "ctr";
+type SortField = "page_url" | "query" | "position" | "impressions" | "clicks" | "ctr" | "score";
 type SortDir = "asc" | "desc";
 
 interface Props {
@@ -123,7 +123,7 @@ export default function SyncedTable({ rows }: Props) {
             <SortHeader field="impressions" align="right" sortField={sortField} sortDir={sortDir} onSort={handleSort}>Impressions</SortHeader>
             <SortHeader field="clicks" align="right" sortField={sortField} sortDir={sortDir} onSort={handleSort}>Clicks</SortHeader>
             <SortHeader field="ctr" align="right" sortField={sortField} sortDir={sortDir} onSort={handleSort}>CTR</SortHeader>
-            <th className="px-4 py-3 font-medium text-zinc-500 text-right">Score</th>
+            <SortHeader field="score" align="right" sortField={sortField} sortDir={sortDir} onSort={handleSort}>Score</SortHeader>
           </tr>
         </thead>
         <tbody>
@@ -157,7 +157,18 @@ export default function SyncedTable({ rows }: Props) {
                 <td className="px-4 py-2.5 text-right tabular-nums">{row.impressions.toLocaleString()}</td>
                 <td className="px-4 py-2.5 text-right tabular-nums">{row.clicks.toLocaleString()}</td>
                 <td className="px-4 py-2.5 text-right tabular-nums">{(row.ctr * 100).toFixed(1)}%</td>
-                <td className="px-4 py-2.5 text-right text-zinc-400">&mdash;</td>
+                <td className="px-4 py-2.5 text-right tabular-nums">
+                  {row.score !== null ? (
+                    <span
+                      className="font-medium text-zinc-900 dark:text-zinc-100"
+                      title={`Traffic upside: ${row.traffic_upside?.toFixed(1)}\nRanking probability: ${(row.ranking_probability! * 100).toFixed(0)}%\nData confidence: ${(row.data_confidence! * 100).toFixed(0)}%`}
+                    >
+                      {row.score.toFixed(1)}
+                    </span>
+                  ) : (
+                    <span className="text-zinc-400">&mdash;</span>
+                  )}
+                </td>
               </tr>
             ))
           )}

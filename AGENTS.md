@@ -6,8 +6,10 @@ others.
 
 ## What this is
 
-SeoPilot - an SEO tool. Project description and purpose to be filled in after
-planning.
+SeoPilot - a local AI-assisted SEO pipeline that pulls Search Console data,
+scores ranking opportunities, enriches them with keyword and SERP research,
+generates page rewrites with Claude, and opens GitHub PRs for approved changes.
+v1 is single-user, single-site, local only.
 
 ## Context files
 

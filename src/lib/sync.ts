@@ -1,6 +1,7 @@
 import { getDb } from "./db";
 import { fetchSearchAnalytics } from "./gsc";
 import { getEnv } from "./env";
+import { identifyOpportunities } from "./opportunities";
 
 export async function runSync(): Promise<{ rowsUpserted: number; runId: number }> {
   const env = getEnv();
@@ -49,6 +50,8 @@ export async function runSync(): Promise<{ rowsUpserted: number; runId: number }
     });
 
     insertMany();
+
+    identifyOpportunities();
 
     db.prepare(
       `UPDATE pipeline_runs SET status = 'completed', completed_at = datetime('now') WHERE id = ?`
